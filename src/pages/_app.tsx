@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
+import { Analytics } from '@vercel/analytics/react'
 import '../styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -31,6 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </Head>
       <Component {...pageProps} />
+      <Analytics />
     </>
   )
 }
