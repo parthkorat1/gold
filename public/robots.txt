@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://goldinsights.blog/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Block access to admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /private/
+
+# Allow access to important SEO files
+Allow: /sitemap.xml
+Allow: /rss.xml
+Allow: /robots.txt
+
+# Social media crawlers
+User-agent: facebookexternalhit/*
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
