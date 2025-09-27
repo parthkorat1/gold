@@ -41,12 +41,27 @@ export default function SEO({
       {/* Basic Meta Tags */}
       <title>{fullTitle}</title>
       <meta name="description" content={fullDescription} />
-      <meta name="keywords" content={article?.keywords?.join(', ') || 'gold, investment, market analysis, price prediction, finance, precious metals'} />
-      <meta name="author" content={article?.author || 'Gold Insights Team'} />
+      <meta name="keywords" content={article?.keywords?.join(', ') || 'breaking news, financial news, viral stories, investment, crypto, bitcoin, gold, market analysis, finance, money'} />
+      <meta name="author" content={article?.author || 'RichMan News Team'} />
       <meta name="robots" content={noindex ? 'noindex,nofollow' : 'index,follow'} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="theme-color" content="#f59e0b" />
+{/*       
+      Search Engine Verification
+      <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE" />
+      <meta name="msvalidate.01" content="YOUR_BING_VERIFICATION_CODE" />
+      <meta name="yandex-verification" content="YOUR_YANDEX_VERIFICATION_CODE" />
       
+      {/* Additional SEO Meta Tags */}
+      {/* <meta name="language" content="English" />
+      <meta name="revisit-after" content="1 days" />
+      <meta name="distribution" content="global" />
+      <meta name="rating" content="general" />
+      <meta name="geo.region" content="US" />
+      <meta name="geo.placename" content="United States" />
+      <meta name="geo.position" content="39.78373;-100.445882" />
+      <meta name="ICBM" content="39.78373, -100.445882" />
+       */} 
       {/* Canonical URL */}
       {canonical && <link rel="canonical" href={canonical} />}
       
@@ -55,8 +70,11 @@ export default function SEO({
       <meta property="og:title" content={openGraph?.title || fullTitle} />
       <meta property="og:description" content={openGraph?.description || fullDescription} />
       <meta property="og:url" content={openGraph?.url || canonical || 'https://goldinsights.blog'} />
-      <meta property="og:site_name" content="Gold Insights Blog" />
+      <meta property="og:site_name" content="Financial Insights" />
       <meta property="og:locale" content="en_US" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:type" content="image/png" />
       
       {openGraph?.images?.map((image, index) => (
         <meta key={index} property="og:image" content={image.url} />
@@ -86,10 +104,11 @@ export default function SEO({
       
       {/* Twitter Card */}
       <meta name="twitter:card" content={twitter?.cardType || 'summary_large_image'} />
-      <meta name="twitter:site" content={twitter?.site || '@goldinsights'} />
-      <meta name="twitter:creator" content={twitter?.handle || '@goldinsights'} />
+      <meta name="twitter:site" content={twitter?.site || '@richmannews'} />
+      <meta name="twitter:creator" content={twitter?.handle || '@richmannews'} />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={fullDescription} />
+      <meta name="twitter:image:alt" content="RichMan News - Breaking Financial Stories" />
       {openGraph?.images?.[0] && (
         <meta name="twitter:image" content={openGraph.images[0].url} />
       )}

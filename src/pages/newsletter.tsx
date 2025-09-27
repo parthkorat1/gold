@@ -16,12 +16,32 @@ export default function Newsletter() {
     e.preventDefault()
     setIsLoading(true)
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    setIsSubscribed(true)
-    setIsLoading(false)
-    setEmail('')
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          email,
+          source: 'newsletter_page'
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        setIsSubscribed(true)
+        setEmail('')
+      } else {
+        alert(data.message || 'Failed to subscribe. Please try again.')
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error)
+      alert('Failed to subscribe. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const benefits = [

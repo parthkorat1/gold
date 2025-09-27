@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
+import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/react'
 import '../styles/globals.css'
 
@@ -18,6 +19,21 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [])
 
+  // Web Vitals tracking
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+        getCLS(console.log)
+        getFID(console.log)
+        getFCP(console.log)
+        getLCP(console.log)
+        getTTFB(console.log)
+      }).catch(() => {
+        // web-vitals not available, skip tracking
+      })
+    }
+  }, [])
+
   if (!mounted) {
     return null
   }
@@ -30,7 +46,48 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* Google Analytics */}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+                page_title: document.title,
+                page_location: window.location.href,
+              });
+            `,
+          }}
+        />
       </Head>
+      
+      {/* Google Analytics Script */}
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+      />
+      <Script
+        id="google-analytics"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+              page_title: document.title,
+              page_location: window.location.href,
+            });
+          `,
+        }}
+      />
+      
       <Component {...pageProps} />
       <Analytics />
     </>

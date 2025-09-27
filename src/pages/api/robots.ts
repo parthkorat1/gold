@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const baseUrl = 'https://goldinsights.blog'
+  const baseUrl = 'https://richman.news'
 
   const robotsTxt = `User-agent: *
 Allow: /

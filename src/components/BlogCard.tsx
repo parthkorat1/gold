@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Calendar, Clock, User, TrendingUp } from 'lucide-react'
+import { Calendar, Clock, User, TrendingUp, Share2, Twitter, Facebook, Linkedin } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import type { BlogPost } from '@/types/blog'
 import { formatDate, slugify } from '@/lib/utils'
 import { cn } from '@/lib/utils'
@@ -13,6 +14,7 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ post, featured = false, className }: BlogCardProps) {
+  const [showShareMenu, setShowShareMenu] = useState(false)
   const categorySlug = slugify(post.category)
   const categoryColors = {
     'finance': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
@@ -21,6 +23,20 @@ export default function BlogCard({ post, featured = false, className }: BlogCard
     'investment': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
     'lifestyle': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
     'market-analysis': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+  }
+
+  const shareUrl = `https://richman.news/blog/${post.slug}`
+  const shareText = post.title
+
+  const shareLinks = {
+    twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
+  }
+
+  const handleShare = (platform: keyof typeof shareLinks) => {
+    window.open(shareLinks[platform], '_blank', 'width=600,height=400')
+    setShowShareMenu(false)
   }
 
   const cardVariants = {
@@ -92,6 +108,45 @@ export default function BlogCard({ post, featured = false, className }: BlogCard
                 <Clock className="w-4 h-4 mr-1" />
                 <span>{post.readingTime}</span>
               </div>
+            </div>
+            
+            {/* Share Button */}
+            <div className="relative">
+              <button
+                onClick={() => setShowShareMenu(!showShareMenu)}
+                className="p-2 text-gray-400 hover:text-gold-600 dark:hover:text-gold-400 transition-colors"
+                aria-label="Share article"
+              >
+                <Share2 className="w-4 h-4" />
+              </button>
+              
+              {showShareMenu && (
+                <div className="absolute right-0 top-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-2 z-10">
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => handleShare('twitter')}
+                      className="p-2 text-blue-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900 rounded transition-colors"
+                      aria-label="Share on Twitter"
+                    >
+                      <Twitter className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleShare('facebook')}
+                      className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900 rounded transition-colors"
+                      aria-label="Share on Facebook"
+                    >
+                      <Facebook className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleShare('linkedin')}
+                      className="p-2 text-blue-700 hover:text-blue-900 hover:bg-blue-50 dark:hover:bg-blue-900 rounded transition-colors"
+                      aria-label="Share on LinkedIn"
+                    >
+                      <Linkedin className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
