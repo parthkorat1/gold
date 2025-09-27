@@ -10,7 +10,7 @@ import Footer from '@/components/Footer'
 import BlogCard from '@/components/BlogCard'
 import SEO from '@/components/SEO'
 import { getPostBySlug, getAllPosts, getRelatedPosts } from '@/lib/blog'
-import { BlogPost } from '@/types/blog'
+import type { BlogPost } from '@/types/blog'
 import { formatDate } from '@/lib/utils'
 
 interface BlogPostProps {

@@ -1,5 +1,3 @@
-import { NextSeoProps } from 'next-seo'
-
 export interface SEOProps {
   title: string
   description: string

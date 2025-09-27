@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Search, X, Clock, TrendingUp } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { searchPosts } from '@/lib/blog'
-import { BlogPost } from '@/types/blog'
+import type { BlogPost } from '@/types/blog'
 import { cn, debounce } from '@/lib/utils'
 
 interface SearchModalProps {

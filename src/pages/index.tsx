@@ -11,7 +11,7 @@ import BlogCard from '@/components/BlogCard'
 import SearchModal from '@/components/SearchModal'
 import SEO from '@/components/SEO'
 import { getAllPosts, getFeaturedPosts, getTrendingPosts } from '@/lib/blog'
-import { BlogPost } from '@/types/blog'
+import type { BlogPost } from '@/types/blog'
 
 interface HomeProps {
   featuredPosts: BlogPost[]

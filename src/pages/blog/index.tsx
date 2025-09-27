@@ -10,7 +10,7 @@ import BlogCard from '@/components/BlogCard'
 import SearchModal from '@/components/SearchModal'
 import SEO from '@/components/SEO'
 import { getAllPosts, getCategories } from '@/lib/blog'
-import { BlogPost, Category } from '@/types/blog'
+import type { BlogPost, Category } from '@/types/blog'
 
 interface BlogIndexProps {
   posts: BlogPost[]

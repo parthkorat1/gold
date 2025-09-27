@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Mail, CheckCircle, Users, TrendingUp, BookOpen } from 'lucide-react'
 
@@ -98,12 +99,12 @@ export default function Newsletter() {
                 </div>
                 
                 <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                  <a href="/" className="btn-primary">
+                  <Link href="/" className="btn-primary">
                     Explore Articles
-                  </a>
-                  <a href="/blog" className="btn-secondary">
+                  </Link>
+                  <Link href="/blog" className="btn-secondary">
                     Read Latest Posts
-                  </a>
+                  </Link>
                 </div>
               </motion.div>
             </div>

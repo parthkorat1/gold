@@ -9,7 +9,7 @@ import Footer from '@/components/Footer'
 import BlogCard from '@/components/BlogCard'
 import SEO from '@/components/SEO'
 import { getPostsByCategory, getAllPosts, getCategories } from '@/lib/blog'
-import { BlogPost, Category } from '@/types/blog'
+import type { BlogPost, Category } from '@/types/blog'
 import { slugify } from '@/lib/utils'
 
 interface CategoryPageProps {

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Calendar, Clock, User, TrendingUp } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { BlogPost } from '@/types/blog'
+import type { BlogPost } from '@/types/blog'
 import { formatDate, slugify } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 
