@@ -26,25 +26,25 @@ export interface SEOProps {
 }
 
 export const defaultSEO: SEOProps = {
-  title: 'Gold Insights Blog - Latest Market Trends & Predictions',
-  description: 'Discover the latest gold market insights, price predictions, and investment strategies. Expert analysis on gold trends for 2026 and beyond.',
+  title: 'RichMan - Breaking Financial News & Viral Money Stories',
+  description: 'Get the latest breaking financial news, viral money stories, and trending investment insights. Join millions reading RichMan for exclusive financial intelligence.',
   openGraph: {
-    title: 'Gold Insights Blog - Latest Market Trends & Predictions',
-    description: 'Discover the latest gold market insights, price predictions, and investment strategies. Expert analysis on gold trends for 2026 and beyond.',
+    title: 'RichMan - Breaking Financial News & Viral Money Stories',
+    description: 'Get the latest breaking financial news, viral money stories, and trending investment insights. Join millions reading RichMan for exclusive financial intelligence.',
     type: 'website',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Gold Insights Blog',
+        alt: 'RichMan - Financial News',
       },
     ],
   },
   twitter: {
     cardType: 'summary_large_image',
-    handle: '@goldinsights',
-    site: '@goldinsights',
+    handle: '@richmannews',
+    site: '@richmannews',
   },
 }
 
@@ -68,7 +68,7 @@ export function generateArticleStructuredData(article: {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Gold Insights Blog',
+      name: 'RichMan News',
       logo: {
         '@type': 'ImageObject',
         url: '/logo.png',
@@ -89,12 +89,12 @@ export function generateWebsiteStructuredData() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Gold Insights Blog',
-    description: 'Latest gold market insights, price predictions, and investment strategies',
-    url: 'https://goldinsights.blog',
+    name: 'RichMan News',
+    description: 'Breaking financial news, viral money stories, and trending investment insights',
+    url: 'https://richman.news',
     potentialAction: {
       '@type': 'SearchAction',
-      target: 'https://goldinsights.blog/search?q={search_term_string}',
+      target: 'https://richman.news/search?q={search_term_string}',
       'query-input': 'required name=search_term_string',
     },
   }

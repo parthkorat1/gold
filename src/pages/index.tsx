@@ -23,29 +23,29 @@ export default function Home({ featuredPosts, trendingPosts, latestPosts }: Home
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   const stats = [
-    { label: 'Monthly Readers', value: '50K+', icon: Users },
-    { label: 'Articles Published', value: '200+', icon: BookOpen },
-    { label: 'Expert Authors', value: '15+', icon: Star },
-    { label: 'Trending Topics', value: '50+', icon: TrendingUp },
+    { label: 'Monthly Readers', value: '2.5M+', icon: Users },
+    { label: 'Viral Stories', value: '500+', icon: BookOpen },
+    { label: 'Breaking News', value: '50+', icon: Star },
+    { label: 'Social Shares', value: '10M+', icon: TrendingUp },
   ]
 
   const categories = [
-    { name: 'Finance', slug: 'finance', count: 45, color: 'bg-blue-500' },
-    { name: 'Investment', slug: 'investment', count: 38, color: 'bg-yellow-500' },
-    { name: 'Future Trends', slug: 'future-trends', count: 32, color: 'bg-orange-500' },
-    { name: 'Technology', slug: 'technology', count: 28, color: 'bg-purple-500' },
+    { name: '🚨 Breaking News', slug: 'breaking-news', count: 25, color: 'bg-red-500' },
+    { name: '🔥 Viral Stories', slug: 'viral-stories', count: 18, color: 'bg-orange-500' },
+    { name: '🤖 AI & Tech', slug: 'ai-tech', count: 12, color: 'bg-purple-500' },
+    { name: '💰 Crypto', slug: 'crypto', count: 8, color: 'bg-yellow-500' },
   ]
 
   return (
     <>
       <SEO
-        title="Gold Insights Blog - Latest Market Trends & Predictions"
-        description="Discover the latest gold market insights, price predictions, and investment strategies. Expert analysis on gold trends for 2026 and beyond."
-        canonical="https://goldinsights.blog"
+        title="RichMan - Breaking Financial News & Viral Money Stories"
+        description="Get the latest breaking financial news, viral money stories, and trending investment insights. Join millions reading RichMan for exclusive financial intelligence."
+        canonical="https://richman.news"
         openGraph={{
-          title: "Gold Insights Blog - Latest Market Trends & Predictions",
-          description: "Discover the latest gold market insights, price predictions, and investment strategies. Expert analysis on gold trends for 2026 and beyond.",
-          url: "https://goldinsights.blog",
+          title: "RichMan - Breaking Financial News & Viral Money Stories",
+          description: "Get the latest breaking financial news, viral money stories, and trending investment insights. Join millions reading RichMan for exclusive financial intelligence.",
+          url: "https://richman.news",
         }}
       />
       
@@ -65,12 +65,12 @@ export default function Home({ featuredPosts, trendingPosts, latestPosts }: Home
                   transition={{ duration: 0.6 }}
                 >
                   <h1 className="text-4xl md:text-6xl font-display font-bold text-gray-900 dark:text-gray-100 mb-6 text-balance">
-                    Your Gateway to{' '}
-                    <span className="gradient-text">Gold Market Intelligence</span>
+                    🚨 BREAKING: The Financial News{' '}
+                    <span className="gradient-text">That Goes Viral</span>
                   </h1>
                   <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto text-balance">
-                    Stay ahead with expert analysis, price predictions, and investment strategies 
-                    from leading market analysts and financial experts.
+                    Join millions reading the most viral financial stories, breaking news, and 
+                    trending money insights that reach global audiences.
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                     <button
@@ -125,10 +125,10 @@ export default function Home({ featuredPosts, trendingPosts, latestPosts }: Home
                 className="text-center mb-12"
               >
                 <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-gray-100 mb-4">
-                  Featured Articles
+                  🔥 VIRAL STORIES
                 </h2>
                 <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                  Handpicked insights and analysis from our expert contributors
+                  The most shared and trending financial stories that are breaking the internet
                 </p>
               </motion.div>
 
@@ -169,10 +169,10 @@ export default function Home({ featuredPosts, trendingPosts, latestPosts }: Home
                 className="text-center mb-12"
               >
                 <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-gray-100 mb-4">
-                  Trending Now
+                  🚨 TRENDING NOW
                 </h2>
                 <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                  The most popular articles and topics our readers are engaging with
+                  Breaking financial news and viral stories that are trending worldwide right now
                 </p>
               </motion.div>
 

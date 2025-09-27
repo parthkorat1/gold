@@ -35,16 +35,16 @@ export default function Header({ onSearchClick }: HeaderProps) {
 
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Categories', href: '/categories' },
-    { name: 'About', href: '/about' },
+    { name: 'Breaking News', href: '/category/breaking-news' },
+    { name: 'Viral Stories', href: '/category/viral-stories' },
+    { name: 'AI & Tech', href: '/category/ai-tech' },
   ]
 
   const categories = [
-    { name: 'Finance', href: '/category/finance' },
-    { name: 'Technology', href: '/category/technology' },
-    { name: 'Future Trends', href: '/category/future-trends' },
-    { name: 'Investment', href: '/category/investment' },
+    { name: '🚨 Breaking News', href: '/category/breaking-news' },
+    { name: '🔥 Viral Stories', href: '/category/viral-stories' },
+    { name: '🤖 AI & Tech', href: '/category/ai-tech' },
+    { name: '📈 All News', href: '/blog' },
   ]
 
   return (
@@ -53,11 +53,11 @@ export default function Header({ onSearchClick }: HeaderProps) {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-gold-500 to-gold-700 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">G</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-700 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">R</span>
             </div>
-            <span className="text-xl font-display font-semibold gradient-text">
-              Gold Insights
+            <span className="text-xl font-display font-bold gradient-text">
+              RichMan
             </span>
           </Link>
 

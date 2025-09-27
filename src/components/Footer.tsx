@@ -46,17 +46,17 @@ export default function Footer() {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-gold-500 to-gold-700 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">G</span>
+              <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-700 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-lg">R</span>
               </div>
-              <span className="text-xl font-display font-semibold gradient-text">
-                Gold Insights
+              <span className="text-xl font-display font-bold gradient-text">
+                RichMan
               </span>
             </Link>
             
             <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md">
-              Your trusted source for gold market insights, price predictions, and investment strategies. 
-              Stay ahead with expert analysis and trending market intelligence.
+              The viral financial news platform that reaches millions. Breaking news, trending stories, 
+              and viral money insights that dominate social media and search engines.
             </p>
 
             {/* Newsletter Signup */}
