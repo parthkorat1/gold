@@ -220,14 +220,40 @@ export default function BlogIndex({ posts, categories }: BlogIndexProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = await getAllPosts()
-  const categories = getCategories()
+  // Check if we're in build mode and Firebase is not available
+  const isBuildTime = process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_FIREBASE_API_KEY
+  
+  if (isBuildTime) {
+    // Return empty data during build if Firebase is not configured
+    return {
+      props: {
+        posts: [],
+        categories: [],
+      },
+      revalidate: 3600,
+    }
+  }
 
-  return {
-    props: {
-      posts,
-      categories,
-    },
-    revalidate: 3600, // Revalidate every hour
+  try {
+    const posts = await getAllPosts()
+    const categories = getCategories()
+
+    return {
+      props: {
+        posts,
+        categories,
+      },
+      revalidate: 3600, // Revalidate every hour
+    }
+  } catch (error) {
+    console.error('Error fetching posts for blog index:', error)
+    // Return empty data if Firebase fails
+    return {
+      props: {
+        posts: [],
+        categories: [],
+      },
+      revalidate: 3600,
+    }
   }
 }

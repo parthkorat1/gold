@@ -278,17 +278,45 @@ export default function Home({ featuredPosts, trendingPosts, latestPosts }: Home
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const featuredPosts = await getFeaturedPosts()
-  const trendingPosts = await getTrendingPosts()
-  const allPosts = await getAllPosts()
-  const latestPosts = allPosts.slice(0, 6)
+  // Check if we're in build mode and Firebase is not available
+  const isBuildTime = process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_FIREBASE_API_KEY
+  
+  if (isBuildTime) {
+    // Return empty data during build if Firebase is not configured
+    return {
+      props: {
+        featuredPosts: [],
+        trendingPosts: [],
+        latestPosts: [],
+      },
+      revalidate: 3600,
+    }
+  }
 
-  return {
-    props: {
-      featuredPosts,
-      trendingPosts,
-      latestPosts,
-    },
-    revalidate: 3600, // Revalidate every hour
+  try {
+    const featuredPosts = await getFeaturedPosts()
+    const trendingPosts = await getTrendingPosts()
+    const allPosts = await getAllPosts()
+    const latestPosts = allPosts.slice(0, 6)
+
+    return {
+      props: {
+        featuredPosts,
+        trendingPosts,
+        latestPosts,
+      },
+      revalidate: 3600, // Revalidate every hour
+    }
+  } catch (error) {
+    console.error('Error fetching posts for homepage:', error)
+    // Return empty data if Firebase fails
+    return {
+      props: {
+        featuredPosts: [],
+        trendingPosts: [],
+        latestPosts: [],
+      },
+      revalidate: 3600,
+    }
   }
 }

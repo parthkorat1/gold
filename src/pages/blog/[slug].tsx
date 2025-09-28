@@ -288,34 +288,71 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await getAllPosts()
-  const paths = posts.map((post) => ({
-    params: { slug: post.slug },
-  }))
+  // Check if we're in build mode and Firebase is not available
+  const isBuildTime = process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_FIREBASE_API_KEY
+  
+  if (isBuildTime) {
+    // Return empty paths during build if Firebase is not configured
+    return {
+      paths: [],
+      fallback: true,
+    }
+  }
 
-  return {
-    paths,
-    fallback: true,
+  try {
+    const posts = await getAllPosts()
+    const paths = posts.map((post) => ({
+      params: { slug: post.slug },
+    }))
+
+    return {
+      paths,
+      fallback: true,
+    }
+  } catch (error) {
+    console.error('Error fetching posts for static paths:', error)
+    return {
+      paths: [],
+      fallback: true,
+    }
   }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string
-  const post = await getPostBySlug(slug)
-
-  if (!post) {
+  
+  // Check if we're in build mode and Firebase is not available
+  const isBuildTime = process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_FIREBASE_API_KEY
+  
+  if (isBuildTime) {
+    // Return 404 during build if Firebase is not configured
     return {
       notFound: true,
     }
   }
 
-  const relatedPosts = await getRelatedPosts(post, 3)
+  try {
+    const post = await getPostBySlug(slug)
 
-  return {
-    props: {
-      post,
-      relatedPosts,
-    },
-    revalidate: 3600, // Revalidate every hour
+    if (!post) {
+      return {
+        notFound: true,
+      }
+    }
+
+    const relatedPosts = await getRelatedPosts(post, 3)
+
+    return {
+      props: {
+        post,
+        relatedPosts,
+      },
+      revalidate: 3600, // Revalidate every hour
+    }
+  } catch (error) {
+    console.error('Error fetching post:', error)
+    return {
+      notFound: true,
+    }
   }
 }

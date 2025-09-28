@@ -216,22 +216,68 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string
-  const posts = await getPostsByCategory(slug)
-  const allCategories = getCategories()
-  const category = allCategories.find((cat) => cat.slug === slug)
-
-  if (!category) {
+  
+  // Check if we're in build mode and Firebase is not available
+  const isBuildTime = process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_FIREBASE_API_KEY
+  
+  if (isBuildTime) {
+    // Return empty data during build if Firebase is not configured
+    const allCategories = getCategories()
+    const category = allCategories.find((cat) => cat.slug === slug)
+    
+    if (!category) {
+      return {
+        notFound: true,
+      }
+    }
+    
     return {
-      notFound: true,
+      props: {
+        posts: [],
+        category,
+        allCategories,
+      },
+      revalidate: 3600,
     }
   }
 
-  return {
-    props: {
-      posts,
-      category,
-      allCategories,
-    },
-    revalidate: 3600, // Revalidate every hour
+  try {
+    const posts = await getPostsByCategory(slug)
+    const allCategories = getCategories()
+    const category = allCategories.find((cat) => cat.slug === slug)
+
+    if (!category) {
+      return {
+        notFound: true,
+      }
+    }
+
+    return {
+      props: {
+        posts,
+        category,
+        allCategories,
+      },
+      revalidate: 3600, // Revalidate every hour
+    }
+  } catch (error) {
+    console.error('Error fetching category posts:', error)
+    const allCategories = getCategories()
+    const category = allCategories.find((cat) => cat.slug === slug)
+    
+    if (!category) {
+      return {
+        notFound: true,
+      }
+    }
+    
+    return {
+      props: {
+        posts: [],
+        category,
+        allCategories,
+      },
+      revalidate: 3600,
+    }
   }
 }
