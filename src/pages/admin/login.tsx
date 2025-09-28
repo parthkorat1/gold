@@ -148,10 +148,10 @@ export default function AdminLogin() {
             {/* Demo Credentials */}
             <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
               <p className="text-xs text-gray-600 dark:text-gray-400 text-center">
-                Demo Credentials:
+               
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-500 text-center mt-1">
-                Email: admin@richman.news | Password: admin123
+                
               </p>
             </div>
           </div>

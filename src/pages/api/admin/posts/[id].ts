@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import connectDB from '@/lib/mongodb'
-import BlogPost from '@/models/BlogPost'
+import { deleteBlogPost, updateBlogPost, getBlogPostById } from '@/lib/firebase-storage'
 import jwt from 'jsonwebtoken'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
@@ -18,13 +17,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(401).json({ message: 'Invalid token' })
     }
 
-    await connectDB()
-
     const { id } = req.query
 
     if (req.method === 'GET') {
-      // Get single post
-      const post = await BlogPost.findById(id)
+      // Get single post by ID (Firestore document ID)
+      const post = await getBlogPostById(id as string)
       if (!post) {
         return res.status(404).json({ message: 'Post not found' })
       }
@@ -42,28 +39,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         updateData.publishedAt = new Date()
       }
 
-      const post = await BlogPost.findByIdAndUpdate(
-        id,
-        updateData,
-        { new: true, runValidators: true }
-      )
-
-      if (!post) {
-        return res.status(404).json({ message: 'Post not found' })
-      }
+      await updateBlogPost(id as string, updateData)
 
       return res.status(200).json({
-        message: 'Post updated successfully',
-        post
+        message: 'Post updated successfully'
       })
     }
 
     if (req.method === 'DELETE') {
       // Delete post
-      const post = await BlogPost.findByIdAndDelete(id)
-      if (!post) {
-        return res.status(404).json({ message: 'Post not found' })
-      }
+      await deleteBlogPost(id as string)
 
       return res.status(200).json({
         message: 'Post deleted successfully'

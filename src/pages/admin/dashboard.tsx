@@ -78,7 +78,7 @@ export default function AdminDashboard() {
   }, [router, fetchDashboardData])
 
   const handleDeletePost = async (postId: string) => {
-    if (!confirm('Are you sure you want to delete this post?')) return
+    if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) return
 
     try {
       const token = localStorage.getItem('adminToken')
@@ -90,10 +90,21 @@ export default function AdminDashboard() {
       })
 
       if (response.ok) {
+        // Remove the post from the local state
         setPosts(posts.filter(post => post._id !== postId))
+        
+        // Show success message (you can add a toast notification here)
+        alert('Post deleted successfully!')
+        
+        // Refresh the dashboard data to get updated stats
+        fetchDashboardData()
+      } else {
+        const errorData = await response.json()
+        alert(`Error deleting post: ${errorData.message || 'Unknown error'}`)
       }
     } catch (error) {
       console.error('Error deleting post:', error)
+      alert('Error deleting post. Please try again.')
     }
   }
 

@@ -239,6 +239,30 @@ export const deleteBlogPost = async (postId: string) => {
   }
 }
 
+// Get blog post by document ID
+export const getBlogPostById = async (postId: string) => {
+  if (!db) {
+    throw new Error('Firebase is not initialized. Please check your environment variables.')
+  }
+  
+  try {
+    const postRef = doc(db, BLOG_POSTS_COLLECTION, postId)
+    const postSnap = await getDoc(postRef)
+    
+    if (postSnap.exists()) {
+      return {
+        id: postSnap.id,
+        ...postSnap.data()
+      }
+    } else {
+      return null
+    }
+  } catch (error) {
+    console.error('Error fetching blog post by ID:', error)
+    throw new Error('Failed to fetch blog post')
+  }
+}
+
 // Search posts
 export const searchBlogPosts = async (searchTerm: string) => {
   if (!db) {
