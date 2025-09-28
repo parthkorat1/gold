@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -545,9 +546,11 @@ export default function NewPost() {
 
                     {watchedValues.featuredImage && (
                       <div className="relative">
-                        <img
+                        <Image
                           src={watchedValues.featuredImage}
                           alt="Featured"
+                          width={400}
+                          height={128}
                           className="w-full h-32 object-cover rounded-lg"
                         />
                         <button

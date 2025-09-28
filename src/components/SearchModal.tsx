@@ -38,16 +38,22 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
     }
   }, [])
 
-  const debouncedSearch = debounce((searchQuery: string) => {
+  const debouncedSearch = debounce(async (searchQuery: string) => {
     if (searchQuery.trim().length < 2) {
       setResults([])
       return
     }
 
     setIsLoading(true)
-    const searchResults = searchPosts(searchQuery)
-    setResults(searchResults)
-    setIsLoading(false)
+    try {
+      const searchResults = await searchPosts(searchQuery)
+      setResults(searchResults)
+    } catch (error) {
+      console.error('Search error:', error)
+      setResults([])
+    } finally {
+      setIsLoading(false)
+    }
   }, 300)
 
   const handleSearch = (searchQuery: string) => {

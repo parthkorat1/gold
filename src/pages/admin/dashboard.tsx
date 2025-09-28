@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
 import { 
@@ -43,18 +43,7 @@ export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
-  useEffect(() => {
-    // Check authentication
-    const token = localStorage.getItem('adminToken')
-    if (!token) {
-      router.push('/admin/login')
-      return
-    }
-
-    fetchDashboardData()
-  }, [router])
-
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken')
       const response = await fetch('/api/admin/dashboard', {
@@ -75,7 +64,18 @@ export default function AdminDashboard() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [router])
+
+  useEffect(() => {
+    // Check authentication
+    const token = localStorage.getItem('adminToken')
+    if (!token) {
+      router.push('/admin/login')
+      return
+    }
+
+    fetchDashboardData()
+  }, [router, fetchDashboardData])
 
   const handleDeletePost = async (postId: string) => {
     if (!confirm('Are you sure you want to delete this post?')) return

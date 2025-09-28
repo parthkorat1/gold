@@ -148,7 +148,7 @@ export function getSuggestedTags(category: string): string[] {
   const viralTags = VIRAL_TAGS.slice(0, 3)
   const seoTags = SEO_TAGS.slice(0, 2)
   
-  return [...new Set([...categoryTags, ...viralTags, ...seoTags])].slice(0, 10)
+  return Array.from(new Set([...categoryTags, ...viralTags, ...seoTags])).slice(0, 10)
 }
 
 // Validate and clean tags
@@ -265,5 +265,5 @@ export function getSuggestedSEOKeywords(category: string): string[] {
   const highVolumeKeywords = HIGH_VOLUME_KEYWORDS.slice(0, 3)
   const longTailKeywords = LONG_TAIL_KEYWORDS.slice(0, 2)
   
-  return [...new Set([...categoryKeywords, ...highVolumeKeywords, ...longTailKeywords])].slice(0, 8)
+  return Array.from(new Set([...categoryKeywords, ...highVolumeKeywords, ...longTailKeywords])).slice(0, 8)
 }

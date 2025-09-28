@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const allPosts = await getAllBlogPosts()
     
     // Get recent posts (limit to 10 for dashboard)
-    const posts = allPosts.slice(0, 10).map(post => ({
+    const posts = allPosts.slice(0, 10).map((post: any) => ({
       _id: post.id,
       title: post.title,
       status: post.status,
@@ -40,12 +40,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Calculate stats
     const totalPosts = allPosts.length
-    const publishedPosts = allPosts.filter(post => post.status === 'published').length
-    const draftPosts = allPosts.filter(post => post.status === 'draft').length
+    const publishedPosts = allPosts.filter((post: any) => post.status === 'published').length
+    const draftPosts = allPosts.filter((post: any) => post.status === 'draft').length
     
-    const totalViews = allPosts.reduce((sum, post) => sum + (post.views || 0), 0)
-    const totalShares = allPosts.reduce((sum, post) => sum + (post.shares || 0), 0)
-    const totalLikes = allPosts.reduce((sum, post) => sum + (post.likes || 0), 0)
+    const totalViews = allPosts.reduce((sum: number, post: any) => sum + (post.views || 0), 0)
+    const totalShares = allPosts.reduce((sum: number, post: any) => sum + (post.shares || 0), 0)
+    const totalLikes = allPosts.reduce((sum: number, post: any) => sum + (post.likes || 0), 0)
 
     const stats = {
       totalPosts,

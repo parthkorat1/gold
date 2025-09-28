@@ -72,7 +72,7 @@ export const getAllBlogPosts = async () => {
         id: doc.id,
         ...doc.data()
       }))
-      .filter(post => post.status === 'published')
+      .filter((post: any) => post.status === 'published')
     
     return publishedPosts
   } catch (error) {
@@ -96,7 +96,7 @@ export const getBlogPostBySlug = async (slug: string) => {
         id: doc.id,
         ...doc.data()
       }))
-      .find(post => post.slug === slug && post.status === 'published')
+      .find((post: any) => post.slug === slug && post.status === 'published')
     
     return post || null
   } catch (error) {
@@ -120,7 +120,7 @@ export const getFeaturedPosts = async () => {
         id: doc.id,
         ...doc.data()
       }))
-      .filter(post => post.status === 'published' && post.featured === true)
+      .filter((post: any) => post.status === 'published' && post.featured === true)
     
     return featuredPosts
   } catch (error) {
@@ -144,7 +144,7 @@ export const getTrendingPosts = async () => {
         id: doc.id,
         ...doc.data()
       }))
-      .filter(post => post.status === 'published' && post.trending === true)
+      .filter((post: any) => post.status === 'published' && post.trending === true)
     
     return trendingPosts
   } catch (error) {
@@ -168,7 +168,7 @@ export const getPostsByCategory = async (category: string) => {
         id: doc.id,
         ...doc.data()
       }))
-      .filter(post => post.status === 'published' && post.category === category)
+      .filter((post: any) => post.status === 'published' && post.category === category)
     
     return categoryPosts
   } catch (error) {
@@ -217,7 +217,7 @@ export const searchBlogPosts = async (searchTerm: string) => {
         id: doc.id,
         ...doc.data()
       }))
-      .filter(post => post.status === 'published')
+      .filter((post: any) => post.status === 'published')
     
     // Filter posts by search term (client-side filtering)
     const lowercaseSearchTerm = searchTerm.toLowerCase()

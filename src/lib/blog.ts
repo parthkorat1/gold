@@ -107,11 +107,24 @@ const samplePosts: BlogPost[] = [
 export async function getAllPosts(): Promise<BlogPost[]> {
   try {
     const posts = await getAllFirestorePosts()
-    return posts.map(post => ({
-      ...post,
+    return posts.map((post: any) => ({
+      slug: post.slug,
+      title: post.title,
+      description: post.description,
+      content: post.content,
+      excerpt: post.excerpt,
+      author: post.author,
       publishedAt: post.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
       updatedAt: post.updatedAt?.toDate?.()?.toISOString(),
-      createdAt: post.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+      category: post.category,
+      tags: post.tags,
+      featuredImage: post.featuredImage,
+      featured: post.featured,
+      trending: post.trending,
+      readingTime: post.readingTime,
+      seoTitle: post.seoTitle,
+      seoDescription: post.seoDescription,
+      keywords: post.keywords
     }))
   } catch (error) {
     console.error('Error fetching posts from Firestore:', error)
@@ -128,10 +141,23 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     if (!post) return null
     
     return {
-      ...post,
-      publishedAt: post.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-      updatedAt: post.updatedAt?.toDate?.()?.toISOString(),
-      createdAt: post.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+      slug: (post as any).slug,
+      title: (post as any).title,
+      description: (post as any).description,
+      content: (post as any).content,
+      excerpt: (post as any).excerpt,
+      author: (post as any).author,
+      publishedAt: (post as any).publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+      updatedAt: (post as any).updatedAt?.toDate?.()?.toISOString(),
+      category: (post as any).category,
+      tags: (post as any).tags,
+      featuredImage: (post as any).featuredImage,
+      featured: (post as any).featured,
+      trending: (post as any).trending,
+      readingTime: (post as any).readingTime,
+      seoTitle: (post as any).seoTitle,
+      seoDescription: (post as any).seoDescription,
+      keywords: (post as any).keywords
     }
   } catch (error) {
     console.error('Error fetching post by slug:', error)
@@ -144,11 +170,24 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 export async function getFeaturedPosts(): Promise<BlogPost[]> {
   try {
     const posts = await getFirestoreFeaturedPosts()
-    return posts.map(post => ({
-      ...post,
+    return posts.map((post: any) => ({
+      slug: post.slug,
+      title: post.title,
+      description: post.description,
+      content: post.content,
+      excerpt: post.excerpt,
+      author: post.author,
       publishedAt: post.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
       updatedAt: post.updatedAt?.toDate?.()?.toISOString(),
-      createdAt: post.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+      category: post.category,
+      tags: post.tags,
+      featuredImage: post.featuredImage,
+      featured: post.featured,
+      trending: post.trending,
+      readingTime: post.readingTime,
+      seoTitle: post.seoTitle,
+      seoDescription: post.seoDescription,
+      keywords: post.keywords
     }))
   } catch (error) {
     console.error('Error fetching featured posts:', error)
@@ -160,11 +199,24 @@ export async function getFeaturedPosts(): Promise<BlogPost[]> {
 export async function getTrendingPosts(): Promise<BlogPost[]> {
   try {
     const posts = await getFirestoreTrendingPosts()
-    return posts.map(post => ({
-      ...post,
+    return posts.map((post: any) => ({
+      slug: post.slug,
+      title: post.title,
+      description: post.description,
+      content: post.content,
+      excerpt: post.excerpt,
+      author: post.author,
       publishedAt: post.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
       updatedAt: post.updatedAt?.toDate?.()?.toISOString(),
-      createdAt: post.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+      category: post.category,
+      tags: post.tags,
+      featuredImage: post.featuredImage,
+      featured: post.featured,
+      trending: post.trending,
+      readingTime: post.readingTime,
+      seoTitle: post.seoTitle,
+      seoDescription: post.seoDescription,
+      keywords: post.keywords
     }))
   } catch (error) {
     console.error('Error fetching trending posts:', error)
@@ -176,11 +228,24 @@ export async function getTrendingPosts(): Promise<BlogPost[]> {
 export async function getPostsByCategory(category: string): Promise<BlogPost[]> {
   try {
     const posts = await getFirestorePostsByCategory(category)
-    return posts.map(post => ({
-      ...post,
+    return posts.map((post: any) => ({
+      slug: post.slug,
+      title: post.title,
+      description: post.description,
+      content: post.content,
+      excerpt: post.excerpt,
+      author: post.author,
       publishedAt: post.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
       updatedAt: post.updatedAt?.toDate?.()?.toISOString(),
-      createdAt: post.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+      category: post.category,
+      tags: post.tags,
+      featuredImage: post.featuredImage,
+      featured: post.featured,
+      trending: post.trending,
+      readingTime: post.readingTime,
+      seoTitle: post.seoTitle,
+      seoDescription: post.seoDescription,
+      keywords: post.keywords
     }))
   } catch (error) {
     console.error('Error fetching posts by category:', error)
@@ -233,11 +298,24 @@ export function getCategories(): Category[] {
 export async function searchPosts(query: string): Promise<BlogPost[]> {
   try {
     const posts = await searchFirestorePosts(query)
-    return posts.map(post => ({
-      ...post,
+    return posts.map((post: any) => ({
+      slug: post.slug,
+      title: post.title,
+      description: post.description,
+      content: post.content,
+      excerpt: post.excerpt,
+      author: post.author,
       publishedAt: post.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
       updatedAt: post.updatedAt?.toDate?.()?.toISOString(),
-      createdAt: post.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+      category: post.category,
+      tags: post.tags,
+      featuredImage: post.featuredImage,
+      featured: post.featured,
+      trending: post.trending,
+      readingTime: post.readingTime,
+      seoTitle: post.seoTitle,
+      seoDescription: post.seoDescription,
+      keywords: post.keywords
     }))
   } catch (error) {
     console.error('Error searching posts:', error)

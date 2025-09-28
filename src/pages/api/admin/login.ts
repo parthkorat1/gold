@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // For demo purposes, we'll use a simple admin account
     // In production, you should hash passwords and use proper authentication
-    if (email === 'admin@richman.news' && password === 'admin123') {
+    if (email === 'admin123' && password === '123') {
       // Create or update admin user
       let user = await User.findOne({ email })
       
