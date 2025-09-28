@@ -13,6 +13,11 @@ import {
 } from 'firebase/firestore'
 import { db } from './firebase'
 
+// Check if Firebase is properly initialized
+if (!db) {
+  console.warn('Firebase is not initialized. Firestore operations will fail.')
+}
+
 // Blog Posts Collection
 const BLOG_POSTS_COLLECTION = 'blogPosts'
 
@@ -43,6 +48,10 @@ export interface FirestoreBlogPost {
 
 // Create a new blog post
 export const createBlogPost = async (postData: Omit<FirestoreBlogPost, 'createdAt' | 'updatedAt'>) => {
+  if (!db) {
+    throw new Error('Firebase is not initialized. Please check your environment variables.')
+  }
+  
   try {
     const docRef = await addDoc(collection(db, BLOG_POSTS_COLLECTION), {
       ...postData,
@@ -58,6 +67,10 @@ export const createBlogPost = async (postData: Omit<FirestoreBlogPost, 'createdA
 
 // Get all published blog posts (simplified query to avoid index requirement)
 export const getAllBlogPosts = async () => {
+  if (!db) {
+    throw new Error('Firebase is not initialized. Please check your environment variables.')
+  }
+  
   try {
     // First get all posts, then filter client-side to avoid index requirement
     const q = query(
@@ -83,6 +96,10 @@ export const getAllBlogPosts = async () => {
 
 // Get blog post by slug
 export const getBlogPostBySlug = async (slug: string) => {
+  if (!db) {
+    throw new Error('Firebase is not initialized. Please check your environment variables.')
+  }
+  
   try {
     // Get all posts and filter client-side to avoid index requirement
     const q = query(
@@ -107,6 +124,10 @@ export const getBlogPostBySlug = async (slug: string) => {
 
 // Get featured posts
 export const getFeaturedPosts = async () => {
+  if (!db) {
+    throw new Error('Firebase is not initialized. Please check your environment variables.')
+  }
+  
   try {
     // Get all posts and filter client-side
     const q = query(
@@ -131,6 +152,10 @@ export const getFeaturedPosts = async () => {
 
 // Get trending posts
 export const getTrendingPosts = async () => {
+  if (!db) {
+    throw new Error('Firebase is not initialized. Please check your environment variables.')
+  }
+  
   try {
     // Get all posts and filter client-side
     const q = query(
@@ -155,6 +180,10 @@ export const getTrendingPosts = async () => {
 
 // Get posts by category
 export const getPostsByCategory = async (category: string) => {
+  if (!db) {
+    throw new Error('Firebase is not initialized. Please check your environment variables.')
+  }
+  
   try {
     // Get all posts and filter client-side
     const q = query(
@@ -179,6 +208,10 @@ export const getPostsByCategory = async (category: string) => {
 
 // Update blog post
 export const updateBlogPost = async (postId: string, updateData: Partial<FirestoreBlogPost>) => {
+  if (!db) {
+    throw new Error('Firebase is not initialized. Please check your environment variables.')
+  }
+  
   try {
     const postRef = doc(db, BLOG_POSTS_COLLECTION, postId)
     await updateDoc(postRef, {
@@ -193,6 +226,10 @@ export const updateBlogPost = async (postId: string, updateData: Partial<Firesto
 
 // Delete blog post
 export const deleteBlogPost = async (postId: string) => {
+  if (!db) {
+    throw new Error('Firebase is not initialized. Please check your environment variables.')
+  }
+  
   try {
     const postRef = doc(db, BLOG_POSTS_COLLECTION, postId)
     await deleteDoc(postRef)
@@ -204,6 +241,10 @@ export const deleteBlogPost = async (postId: string) => {
 
 // Search posts
 export const searchBlogPosts = async (searchTerm: string) => {
+  if (!db) {
+    throw new Error('Firebase is not initialized. Please check your environment variables.')
+  }
+  
   try {
     // Get all published posts first
     const q = query(
