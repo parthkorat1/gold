@@ -45,9 +45,9 @@ export default function CategoryPage({ posts, category, allCategories }: Categor
   }
 
   const breadcrumbs = [
-    { name: 'Home', url: 'https://goldinsights.blog' },
-    { name: 'Blog', url: 'https://goldinsights.blog/blog' },
-    { name: category.name, url: `https://goldinsights.blog/category/${category.slug}` },
+    { name: 'Home', url: 'https://rechman.vercel.app' },
+    { name: 'Blog', url: 'https://rechman.vercel.app/blog' },
+    { name: category.name, url: `https://rechman.vercel.app/category/${category.slug}` },
   ]
 
   return (
@@ -55,11 +55,11 @@ export default function CategoryPage({ posts, category, allCategories }: Categor
       <SEO
         title={`${category.name} Articles - Gold Insights Blog`}
         description={`Explore ${category.name.toLowerCase()} articles and insights. Discover expert analysis, trends, and strategies in ${category.name.toLowerCase()}.`}
-        canonical={`https://goldinsights.blog/category/${category.slug}`}
+        canonical={`https://rechman.vercel.app/category/${category.slug}`}
         openGraph={{
           title: `${category.name} Articles - Gold Insights Blog`,
           description: `Explore ${category.name.toLowerCase()} articles and insights. Discover expert analysis, trends, and strategies in ${category.name.toLowerCase()}.`,
-          url: `https://goldinsights.blog/category/${category.slug}`,
+          url: `https://rechman.vercel.app/category/${category.slug}`,
         }}
         breadcrumbs={breadcrumbs}
       />
@@ -216,7 +216,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string
-  const posts = getPostsByCategory(slug)
+  const posts = await getPostsByCategory(slug)
   const allCategories = getCategories()
   const category = allCategories.find((cat) => cat.slug === slug)
 

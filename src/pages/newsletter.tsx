@@ -68,7 +68,7 @@ export default function Newsletter() {
         <SEO
           title="Newsletter Subscription - Gold Insights Blog"
           description="Thank you for subscribing to our newsletter. Stay updated with the latest gold market insights and expert analysis."
-          canonical="https://goldinsights.blog/newsletter"
+          canonical="https://rechman.vercel.app/newsletter"
         />
         
         <div className="min-h-screen bg-white dark:bg-gray-900">
@@ -141,11 +141,11 @@ export default function Newsletter() {
       <SEO
         title="Newsletter Subscription - Gold Insights Blog"
         description="Subscribe to our newsletter for weekly gold market insights, expert analysis, and exclusive content from leading precious metals analysts."
-        canonical="https://goldinsights.blog/newsletter"
+        canonical="https://rechman.vercel.app/newsletter"
         openGraph={{
           title: "Newsletter Subscription - Gold Insights Blog",
           description: "Subscribe to our newsletter for weekly gold market insights, expert analysis, and exclusive content from leading precious metals analysts.",
-          url: "https://goldinsights.blog/newsletter",
+          url: "https://rechman.vercel.app/newsletter",
         }}
       />
       

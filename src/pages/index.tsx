@@ -41,11 +41,11 @@ export default function Home({ featuredPosts, trendingPosts, latestPosts }: Home
       <SEO
         title="RichMan - Breaking Financial News & Viral Money Stories"
         description="Get the latest breaking financial news, viral money stories, and trending investment insights. Join millions reading RichMan for exclusive financial intelligence."
-        canonical="https://richman.news"
+        canonical="https://rechman.vercel.app"
         openGraph={{
           title: "RichMan - Breaking Financial News & Viral Money Stories",
           description: "Get the latest breaking financial news, viral money stories, and trending investment insights. Join millions reading RichMan for exclusive financial intelligence.",
-          url: "https://richman.news",
+          url: "https://rechman.vercel.app",
         }}
       />
       
@@ -66,7 +66,7 @@ export default function Home({ featuredPosts, trendingPosts, latestPosts }: Home
                 >
                   <h1 className="text-4xl md:text-6xl font-display font-bold text-gray-900 dark:text-gray-100 mb-6 text-balance">
                     🚨 BREAKING: The Financial News{' '}
-                    <span className="gradient-text">That Goes Viral</span>
+                    <span className="gradient-text">In Just Minutes</span>
                   </h1>
                   <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto text-balance">
                     Join millions reading the most viral financial stories, breaking news, and 
@@ -278,9 +278,10 @@ export default function Home({ featuredPosts, trendingPosts, latestPosts }: Home
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const featuredPosts = getFeaturedPosts()
-  const trendingPosts = getTrendingPosts()
-  const latestPosts = getAllPosts().slice(0, 6)
+  const featuredPosts = await getFeaturedPosts()
+  const trendingPosts = await getTrendingPosts()
+  const allPosts = await getAllPosts()
+  const latestPosts = allPosts.slice(0, 6)
 
   return {
     props: {

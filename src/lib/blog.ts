@@ -1,7 +1,15 @@
 import { BlogPost, Category } from '@/types/blog'
 import { slugify, generateExcerpt, readingTime } from './utils'
+import { 
+  getAllBlogPosts as getAllFirestorePosts, 
+  getBlogPostBySlug as getFirestorePostBySlug, 
+  getFeaturedPosts as getFirestoreFeaturedPosts, 
+  getTrendingPosts as getFirestoreTrendingPosts, 
+  getPostsByCategory as getFirestorePostsByCategory,
+  searchBlogPosts as searchFirestorePosts 
+} from './firebase-storage'
 
-// Viral financial news posts - designed to reach millions
+// Fallback data for when Firestore is not available
 const samplePosts: BlogPost[] = [
   {
     slug: 'bitcoin-100k-2024-breaking-news',
@@ -96,40 +104,99 @@ const samplePosts: BlogPost[] = [
   }
 ]
 
-export function getAllPosts(): BlogPost[] {
-  return samplePosts.sort((a, b) => 
-    new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  )
+export async function getAllPosts(): Promise<BlogPost[]> {
+  try {
+    const posts = await getAllFirestorePosts()
+    return posts.map(post => ({
+      ...post,
+      publishedAt: post.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+      updatedAt: post.updatedAt?.toDate?.()?.toISOString(),
+      createdAt: post.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+    }))
+  } catch (error) {
+    console.error('Error fetching posts from Firestore:', error)
+    // Return fallback data if Firestore fails
+    return samplePosts.sort((a, b) =>
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    )
+  }
 }
 
-export function getPostBySlug(slug: string): BlogPost | null {
-  const posts = getAllPosts()
-  return posts.find((post) => post.slug === slug) || null
+export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+  try {
+    const post = await getFirestorePostBySlug(slug)
+    if (!post) return null
+    
+    return {
+      ...post,
+      publishedAt: post.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+      updatedAt: post.updatedAt?.toDate?.()?.toISOString(),
+      createdAt: post.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+    }
+  } catch (error) {
+    console.error('Error fetching post by slug:', error)
+    // Return fallback data if Firestore fails
+    const posts = await getAllPosts()
+    return posts.find((post) => post.slug === slug) || null
+  }
 }
 
-export function getFeaturedPosts(): BlogPost[] {
-  const posts = getAllPosts()
-  return posts.filter((post) => post.featured)
+export async function getFeaturedPosts(): Promise<BlogPost[]> {
+  try {
+    const posts = await getFirestoreFeaturedPosts()
+    return posts.map(post => ({
+      ...post,
+      publishedAt: post.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+      updatedAt: post.updatedAt?.toDate?.()?.toISOString(),
+      createdAt: post.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+    }))
+  } catch (error) {
+    console.error('Error fetching featured posts:', error)
+    const posts = await getAllPosts()
+    return posts.filter((post) => post.featured)
+  }
 }
 
-export function getTrendingPosts(): BlogPost[] {
-  const posts = getAllPosts()
-  return posts.filter((post) => post.trending)
+export async function getTrendingPosts(): Promise<BlogPost[]> {
+  try {
+    const posts = await getFirestoreTrendingPosts()
+    return posts.map(post => ({
+      ...post,
+      publishedAt: post.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+      updatedAt: post.updatedAt?.toDate?.()?.toISOString(),
+      createdAt: post.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+    }))
+  } catch (error) {
+    console.error('Error fetching trending posts:', error)
+    const posts = await getAllPosts()
+    return posts.filter((post) => post.trending)
+  }
 }
 
-export function getPostsByCategory(category: string): BlogPost[] {
-  const posts = getAllPosts()
-  return posts.filter((post) => 
-    slugify(post.category) === category
-  )
+export async function getPostsByCategory(category: string): Promise<BlogPost[]> {
+  try {
+    const posts = await getFirestorePostsByCategory(category)
+    return posts.map(post => ({
+      ...post,
+      publishedAt: post.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+      updatedAt: post.updatedAt?.toDate?.()?.toISOString(),
+      createdAt: post.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+    }))
+  } catch (error) {
+    console.error('Error fetching posts by category:', error)
+    const posts = await getAllPosts()
+    return posts.filter((post) =>
+      slugify(post.category) === category
+    )
+  }
 }
 
-export function getRelatedPosts(currentPost: BlogPost, limit: number = 3): BlogPost[] {
-  const posts = getAllPosts()
+export async function getRelatedPosts(currentPost: BlogPost, limit: number = 3): Promise<BlogPost[]> {
+  const posts = await getAllPosts()
   return posts
-    .filter((post) => 
-      post.slug !== currentPost.slug && 
-      (post.category === currentPost.category || 
+    .filter((post) =>
+      post.slug !== currentPost.slug &&
+      (post.category === currentPost.category ||
        post.tags.some(tag => currentPost.tags.includes(tag)))
     )
     .slice(0, limit)
@@ -159,19 +226,29 @@ export function getCategories(): Category[] {
       postCount: 1
     }
   ]
-  
+
   return categories.sort((a, b) => b.postCount - a.postCount)
 }
 
-export function searchPosts(query: string): BlogPost[] {
-  const posts = getAllPosts()
-  const lowercaseQuery = query.toLowerCase()
-
-  return posts.filter((post) => 
-    post.title.toLowerCase().includes(lowercaseQuery) ||
-    post.description.toLowerCase().includes(lowercaseQuery) ||
-    post.content.toLowerCase().includes(lowercaseQuery) ||
-    post.tags.some(tag => tag.toLowerCase().includes(lowercaseQuery)) ||
-    post.category.toLowerCase().includes(lowercaseQuery)
-  )
+export async function searchPosts(query: string): Promise<BlogPost[]> {
+  try {
+    const posts = await searchFirestorePosts(query)
+    return posts.map(post => ({
+      ...post,
+      publishedAt: post.publishedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+      updatedAt: post.updatedAt?.toDate?.()?.toISOString(),
+      createdAt: post.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+    }))
+  } catch (error) {
+    console.error('Error searching posts:', error)
+    const posts = await getAllPosts()
+    const lowercaseQuery = query.toLowerCase()
+    return posts.filter((post) =>
+      post.title.toLowerCase().includes(lowercaseQuery) ||
+      post.description.toLowerCase().includes(lowercaseQuery) ||
+      post.content.toLowerCase().includes(lowercaseQuery) ||
+      post.tags.some(tag => tag.toLowerCase().includes(lowercaseQuery)) ||
+      post.category.toLowerCase().includes(lowercaseQuery)
+    )
+  }
 }

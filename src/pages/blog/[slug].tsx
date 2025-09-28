@@ -44,7 +44,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
     )
   }
 
-  const shareUrl = `https://goldinsights.blog/blog/${post.slug}`
+  const shareUrl = `https://rechman.vercel.app/blog/${post.slug}`
   const shareText = `Check out this article: ${post.title}`
 
   const handleShare = async () => {
@@ -66,8 +66,8 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
   }
 
   const breadcrumbs = [
-    { name: 'Home', url: 'https://goldinsights.blog' },
-    { name: 'Blog', url: 'https://goldinsights.blog/blog' },
+    { name: 'Home', url: 'https://rechman.vercel.app' },
+    { name: 'Blog', url: 'https://rechman.vercel.app/blog' },
     { name: post.title, url: shareUrl },
   ]
 
@@ -288,7 +288,7 @@ export default function BlogPost({ post, relatedPosts }: BlogPostProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = getAllPosts()
+  const posts = await getAllPosts()
   const paths = posts.map((post) => ({
     params: { slug: post.slug },
   }))
@@ -301,7 +301,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string
-  const post = getPostBySlug(slug)
+  const post = await getPostBySlug(slug)
 
   if (!post) {
     return {
@@ -309,7 +309,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   }
 
-  const relatedPosts = getRelatedPosts(post, 3)
+  const relatedPosts = await getRelatedPosts(post, 3)
 
   return {
     props: {

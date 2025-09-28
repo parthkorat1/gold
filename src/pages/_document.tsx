@@ -39,10 +39,10 @@ export default function Document() {
               '@type': 'WebSite',
               name: 'Gold Insights Blog',
               description: 'Latest gold market insights, price predictions, and investment strategies',
-              url: 'https://goldinsights.blog',
+              url: 'https://rechman.vercel.app',
               potentialAction: {
                 '@type': 'SearchAction',
-                target: 'https://goldinsights.blog/search?q={search_term_string}',
+                target: 'https://rechman.vercel.app/search?q={search_term_string}',
                 'query-input': 'required name=search_term_string',
               },
               publisher: {
@@ -50,7 +50,7 @@ export default function Document() {
                 name: 'Gold Insights Blog',
                 logo: {
                   '@type': 'ImageObject',
-                  url: 'https://goldinsights.blog/logo.png',
+                  url: 'https://rechman.vercel.app/logo.png',
                 },
               },
             }),

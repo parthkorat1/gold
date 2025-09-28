@@ -1,9 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getAllPosts } from '@/lib/blog'
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const posts = getAllPosts().slice(0, 20) // Latest 20 posts
-  const baseUrl = 'https://richman.vercel.app'
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const allPosts = await getAllPosts()
+  const posts = allPosts.slice(0, 20) // Latest 20 posts
+  const baseUrl = 'https://rechman.vercel.app'
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">

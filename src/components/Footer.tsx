@@ -7,35 +7,35 @@ export default function Footer() {
   const footerLinks = {
     'Blog': [
       { name: 'Latest Posts', href: '/blog' },
-      { name: 'Categories', href: '/categories' },
-      { name: 'Trending', href: '/trending' },
-      { name: 'Featured', href: '/featured' },
+      { name: 'Breaking News', href: '/category/breaking-news' },
+      { name: 'Viral Stories', href: '/category/viral-stories' },
+      { name: 'AI & Tech', href: '/category/ai-tech' },
     ],
     'Categories': [
-      { name: 'Finance', href: '/category/finance' },
-      { name: 'Technology', href: '/category/technology' },
-      { name: 'Future Trends', href: '/category/future-trends' },
-      { name: 'Investment', href: '/category/investment' },
+      { name: 'Breaking News', href: '/category/breaking-news' },
+      { name: 'Viral Stories', href: '/category/viral-stories' },
+      { name: 'AI & Tech', href: '/category/ai-tech' },
+      { name: 'Crypto', href: '/category/crypto' },
     ],
     'Resources': [
-      { name: 'About Us', href: '/about' },
       { name: 'Newsletter', href: '/newsletter' },
-      { name: 'Contact', href: '/contact' },
       { name: 'Privacy Policy', href: '/privacy' },
-    ],
-    'Legal': [
       { name: 'Terms of Service', href: '/terms' },
       { name: 'Cookie Policy', href: '/cookies' },
+    ],
+    'Legal': [
       { name: 'Disclaimer', href: '/disclaimer' },
       { name: 'Sitemap', href: '/sitemap.xml' },
+      { name: 'RSS Feed', href: '/rss.xml' },
+      { name: 'Robots.txt', href: '/robots.txt' },
     ],
   }
 
   const socialLinks = [
-    { name: 'Twitter', href: 'https://twitter.com/goldinsights', icon: Twitter },
-    { name: 'LinkedIn', href: 'https://linkedin.com/company/goldinsights', icon: Linkedin },
-    { name: 'GitHub', href: 'https://github.com/goldinsights', icon: Github },
-    { name: 'Email', href: 'mailto:hello@goldinsights.blog', icon: Mail },
+    { name: 'Twitter', href: 'https://twitter.com/richmannews', icon: Twitter },
+    { name: 'LinkedIn', href: 'https://linkedin.com/company/richman-news', icon: Linkedin },
+    { name: 'GitHub', href: 'https://github.com/richman-news', icon: Github },
+    { name: 'Email', href: 'mailto:hello@rechman.vercel.app', icon: Mail },
   ]
 
   return (
@@ -109,7 +109,7 @@ export default function Footer() {
         <div className="py-6 border-t border-gray-200 dark:border-gray-700">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             <div className="text-sm text-gray-600 dark:text-gray-400">
-              © {currentYear} Gold Insights Blog. All rights reserved.
+              © {currentYear} RichMan News. All rights reserved.
             </div>
 
             {/* Social Links */}
@@ -135,7 +135,7 @@ export default function Footer() {
           {/* Additional Info */}
           <div className="mt-4 text-xs text-gray-500 dark:text-gray-400 text-center">
             <p>
-              This website provides financial information for educational purposes only. 
+              RichMan News provides financial information for educational and entertainment purposes only. 
               Always consult with a qualified financial advisor before making investment decisions.
             </p>
           </div>

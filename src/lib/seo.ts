@@ -91,10 +91,10 @@ export function generateWebsiteStructuredData() {
     '@type': 'WebSite',
     name: 'RichMan News',
     description: 'Breaking financial news, viral money stories, and trending investment insights',
-    url: 'https://richman.news',
+    url: 'https://rechman.vercel.app',
     potentialAction: {
       '@type': 'SearchAction',
-      target: 'https://richman.news/search?q={search_term_string}',
+      target: 'https://rechman.vercel.app/search?q={search_term_string}',
       'query-input': 'required name=search_term_string',
     },
   }

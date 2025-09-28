@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const baseUrl = 'https://richman.news'
+  const baseUrl = 'https://rechman.vercel.app'
 
   const robotsTxt = `User-agent: *
 Allow: /

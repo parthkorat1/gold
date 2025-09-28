@@ -31,7 +31,7 @@ export default function SEO({
       publishedTime: article.publishedAt,
       modifiedTime: article.updatedAt,
       image: article.featuredImage,
-      url: `https://goldinsights.blog/blog/${article.slug}`,
+      url: `https://rechman.vercel.app/blog/${article.slug}`,
     })] : []),
     ...(breadcrumbs ? [generateBreadcrumbStructuredData(breadcrumbs)] : []),
   ]
@@ -69,7 +69,7 @@ export default function SEO({
       <meta property="og:type" content={article ? 'article' : 'website'} />
       <meta property="og:title" content={openGraph?.title || fullTitle} />
       <meta property="og:description" content={openGraph?.description || fullDescription} />
-      <meta property="og:url" content={openGraph?.url || canonical || 'https://goldinsights.blog'} />
+      <meta property="og:url" content={openGraph?.url || canonical || 'https://rechman.vercel.app'} />
       <meta property="og:site_name" content="Financial Insights" />
       <meta property="og:locale" content="en_US" />
       <meta property="og:image:width" content="1200" />

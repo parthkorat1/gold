@@ -38,11 +38,11 @@ export default function BlogIndex({ posts, categories }: BlogIndexProps) {
       <SEO
         title="Blog - Gold Market Insights & Analysis"
         description="Explore our comprehensive collection of gold market insights, investment strategies, and expert analysis. Stay informed with the latest trends and predictions."
-        canonical="https://goldinsights.blog/blog"
+        canonical="https://rechman.vercel.app/blog"
         openGraph={{
           title: "Blog - Gold Market Insights & Analysis",
           description: "Explore our comprehensive collection of gold market insights, investment strategies, and expert analysis. Stay informed with the latest trends and predictions.",
-          url: "https://goldinsights.blog/blog",
+          url: "https://rechman.vercel.app/blog",
         }}
       />
       
@@ -220,7 +220,7 @@ export default function BlogIndex({ posts, categories }: BlogIndexProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = getAllPosts()
+  const posts = await getAllPosts()
   const categories = getCategories()
 
   return {
