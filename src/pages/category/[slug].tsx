@@ -237,7 +237,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         category,
         allCategories,
       },
-      revalidate: 3600,
+      revalidate: 60,
     }
   }
 
@@ -258,7 +258,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         category,
         allCategories,
       },
-      revalidate: 3600, // Revalidate every hour
+      revalidate: 60, // Revalidate every minute
     }
   } catch (error) {
     console.error('Error fetching category posts:', error)
@@ -277,7 +277,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         category,
         allCategories,
       },
-      revalidate: 3600,
+      revalidate: 60,
     }
   }
 }

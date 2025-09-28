@@ -30,6 +30,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const postId = await createBlogPost(postData)
 
+      // Trigger revalidation for key pages
+      try {
+        await res.revalidate('/')
+        await res.revalidate('/blog')
+        if (postData.category) {
+          await res.revalidate(`/category/${postData.category.toLowerCase().replace(/\s+/g, '-')}`)
+        }
+      } catch (revalidateError) {
+        console.error('Revalidation error:', revalidateError)
+        // Don't fail the request if revalidation fails
+      }
+
       return res.status(201).json({
         message: 'Post created successfully',
         postId

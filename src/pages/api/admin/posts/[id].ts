@@ -50,6 +50,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Delete post
       await deleteBlogPost(id as string)
 
+      // Trigger revalidation for key pages
+      try {
+        await res.revalidate('/')
+        await res.revalidate('/blog')
+        // Note: We can't revalidate specific category pages without knowing the category
+        // The 60-second revalidation will handle this
+      } catch (revalidateError) {
+        console.error('Revalidation error:', revalidateError)
+        // Don't fail the request if revalidation fails
+      }
+
       return res.status(200).json({
         message: 'Post deleted successfully'
       })

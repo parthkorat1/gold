@@ -347,7 +347,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         post,
         relatedPosts,
       },
-      revalidate: 3600, // Revalidate every hour
+      revalidate: 60, // Revalidate every minute
     }
   } catch (error) {
     console.error('Error fetching post:', error)
