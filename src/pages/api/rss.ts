@@ -7,12 +7,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const baseUrl = 'https://rechman.vercel.app'
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>RichMan News - Breaking Financial News & Viral Money Stories</title>
     <description>Get the latest breaking financial news, viral money stories, and trending investment insights. Join millions reading RichMan for exclusive financial intelligence.</description>
     <link>${baseUrl}</link>
     <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://pubsubhubbub.appspot.com/" rel="hub"/>
     <language>en-us</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <managingEditor>editor@richman.news (RichMan News Team)</managingEditor>
@@ -30,6 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       <category><![CDATA[${post.category}]]></category>
       ${post.tags.map(tag => `<category><![CDATA[${tag}]]></category>`).join('')}
       ${post.featuredImage ? `<enclosure url="${post.featuredImage}" type="image/jpeg"/>` : ''}
+      ${post.featuredImage ? `<media:content url="${post.featuredImage}" medium="image" />` : ''}
     </item>`).join('')}
   </channel>
 </rss>`

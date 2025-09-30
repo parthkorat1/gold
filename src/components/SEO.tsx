@@ -19,8 +19,8 @@ export default function SEO({
   breadcrumbs,
   noindex = false
 }: SEOComponentProps) {
-  const fullTitle = title.includes('Gold Insights') ? title : `${title} | Gold Insights Blog`
-  const fullDescription = description || 'Discover the latest gold market insights, price predictions, and investment strategies.'
+  const fullTitle = title.includes('RichMan News') ? title : `${title} | RichMan News`
+  const fullDescription = description || 'Breaking financial news, viral money stories, and trending investment insights.'
   
   const structuredData = [
     generateWebsiteStructuredData(),
@@ -64,13 +64,14 @@ export default function SEO({
        */} 
       {/* Canonical URL */}
       {canonical && <link rel="canonical" href={canonical} />}
+      <link rel="alternate" type="application/rss+xml" title="RichMan News RSS" href="https://rechman.vercel.app/rss.xml" />
       
       {/* Open Graph */}
       <meta property="og:type" content={article ? 'article' : 'website'} />
       <meta property="og:title" content={openGraph?.title || fullTitle} />
       <meta property="og:description" content={openGraph?.description || fullDescription} />
       <meta property="og:url" content={openGraph?.url || canonical || 'https://rechman.vercel.app'} />
-      <meta property="og:site_name" content="Financial Insights" />
+      <meta property="og:site_name" content="RichMan News" />
       <meta property="og:locale" content="en_US" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
@@ -99,6 +100,8 @@ export default function SEO({
           {article.tags.map((tag, index) => (
             <meta key={index} property="article:tag" content={tag} />
           ))}
+          {/* News specific */}
+          <meta property="og:type" content="article" />
         </>
       )}
       
@@ -126,6 +129,36 @@ export default function SEO({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
         />
       ))}
+      {/* NewsArticle specific structured data for breaking news visibility */}
+      {article && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'NewsArticle',
+              headline: article.title,
+              description: article.description,
+              datePublished: article.publishedAt,
+              dateModified: article.updatedAt || article.publishedAt,
+              author: {
+                '@type': 'Person',
+                name: article.author,
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'RichMan News',
+                logo: { '@type': 'ImageObject', url: '/logo.png' },
+              },
+              image: article.featuredImage || '/og-image.jpg',
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': `https://rechman.vercel.app/blog/${article.slug}`,
+              },
+            }),
+          }}
+        />
+      )}
       
       {/* Favicon and Icons */}
       <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥇</text></svg>" />
@@ -136,6 +169,7 @@ export default function SEO({
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link rel="preconnect" href="https://images.unsplash.com" />
+      <link rel="dns-prefetch" href="https://rechman.vercel.app" />
     </Head>
   )
 }

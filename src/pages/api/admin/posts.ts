@@ -37,9 +37,42 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (postData.category) {
           await res.revalidate(`/category/${postData.category.toLowerCase().replace(/\s+/g, '-')}`)
         }
+        // Also revalidate dynamic blog page if slug provided
+        if (postData.slug) {
+          await res.revalidate(`/blog/${postData.slug}`)
+        }
       } catch (revalidateError) {
         console.error('Revalidation error:', revalidateError)
         // Don't fail the request if revalidation fails
+      }
+
+      // Fire indexing pings (best-effort, non-blocking)
+      try {
+        const baseUrl = 'https://rechman.vercel.app'
+        const slug = postData.slug
+        if (slug) {
+          const url = `${baseUrl}/blog/${slug}`
+          // IndexNow (Bing, Yandex, Seznam)
+          fetch('https://api.indexnow.org/indexnow', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              host: 'rechman.vercel.app',
+              key: process.env.INDEXNOW_KEY || 'demo',
+              keyLocation: `${baseUrl}/indexnow.txt`,
+              urlList: [url],
+            }),
+          }).catch(() => {})
+
+          // WebSub ping for feed
+          fetch('https://pubsubhubbub.appspot.com/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `hub.mode=publish&hub.url=${encodeURIComponent(`${baseUrl}/rss.xml`)}`,
+          }).catch(() => {})
+        }
+      } catch (e) {
+        // Swallow ping errors
       }
 
       return res.status(201).json({

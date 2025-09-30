@@ -46,6 +46,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="alternate" type="application/rss+xml" title="RichMan News RSS" href="/rss.xml" />
+        <meta name="apple-itunes-app" content="app-id=, app-argument=https://rechman.vercel.app" />
+        <meta name="application-name" content="RichMan News" />
+        <meta name="apple-mobile-web-app-title" content="RichMan News" />
+        <meta name="format-detection" content="telephone=no" />
         
         {/* Google Analytics */}
         <script
