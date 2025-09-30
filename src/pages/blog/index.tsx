@@ -224,11 +224,13 @@ export const getStaticProps: GetStaticProps = async () => {
   const isBuildTime = process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_FIREBASE_API_KEY
   
   if (isBuildTime) {
-    // Return empty data during build if Firebase is not configured
+    // Use fallback/sample data during build if Firebase is not configured
+    const posts = await getAllPosts()
+    const categories = getCategories()
     return {
       props: {
-        posts: [],
-        categories: [],
+        posts,
+        categories,
       },
       revalidate: 60,
     }

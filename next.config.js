@@ -14,6 +14,8 @@ const nextConfig = {
   generateEtags: true,
   
   images: {
+    // Disable optimization so any image host and format (png/jpg/webp/avif/svg/gif) works
+    unoptimized: true,
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: true,

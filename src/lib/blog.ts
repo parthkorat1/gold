@@ -227,8 +227,8 @@ export async function getTrendingPosts(): Promise<BlogPost[]> {
 
 export async function getPostsByCategory(category: string): Promise<BlogPost[]> {
   try {
-    const posts = await getFirestorePostsByCategory(category)
-    return posts.map((post: any) => ({
+    const firestorePosts = await getFirestorePostsByCategory(category)
+    const mapped = firestorePosts.map((post: any) => ({
       slug: post.slug,
       title: post.title,
       description: post.description,
@@ -247,6 +247,14 @@ export async function getPostsByCategory(category: string): Promise<BlogPost[]> 
       seoDescription: post.seoDescription,
       keywords: post.keywords
     }))
+
+    // If Firestore returns no posts, fall back to local/sample data
+    if (!mapped || mapped.length === 0) {
+      const all = await getAllPosts()
+      return all.filter((post) => slugify(post.category) === category)
+    }
+
+    return mapped
   } catch (error) {
     console.error('Error fetching posts by category:', error)
     const posts = await getAllPosts()

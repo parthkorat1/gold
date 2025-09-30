@@ -26,10 +26,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'Image URL is required' })
     }
 
-    // For now, we'll just return the URL as-is
-    // In a real implementation, you might want to validate the URL
-    // or upload to a CDN service
-    
+    // Accept common image formats (png, jpg, jpeg, webp, gif, svg, avif) and data URLs
+    const allowedMimeRegex = /^(data:image\/(png|jpeg|jpg|webp|gif|svg\+xml|avif);base64,)|(^https?:\/\/)/i
+    if (!allowedMimeRegex.test(imageUrl)) {
+      return res.status(400).json({ message: 'Unsupported image format or URL' })
+    }
+
     return res.status(200).json({
       message: 'Image URL processed successfully',
       url: imageUrl
